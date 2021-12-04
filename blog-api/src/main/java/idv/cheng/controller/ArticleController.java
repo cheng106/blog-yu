@@ -30,4 +30,15 @@ public class ArticleController {
     public Result listArticle(@RequestBody PageParams page) {
         return articleService.listArticle(page);
     }
+
+    /**
+     * 首頁熱門文章
+     *
+     * @return idv.cheng.vo.Result
+     **/
+    @PostMapping("/hot")
+    public Result hotArticle() {
+        int limit = 5;
+        return articleService.hotArticle(limit);
+    }
 }
