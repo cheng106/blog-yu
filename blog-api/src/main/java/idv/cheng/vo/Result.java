@@ -1,6 +1,6 @@
 package idv.cheng.vo;
 
-import idv.cheng.content.ErrorCode;
+import idv.cheng.enums.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

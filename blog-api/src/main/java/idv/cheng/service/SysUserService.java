@@ -1,6 +1,7 @@
 package idv.cheng.service;
 
 import idv.cheng.dao.pojo.SysUser;
+import idv.cheng.vo.Result;
 
 /**
  * @author cheng
@@ -11,4 +12,10 @@ public interface SysUserService {
     SysUser findUserById(Long id);
 
     SysUser findUser(String account, String password);
+
+    Result findUserByToken(String token);
+
+    SysUser findUserByAccount(String account);
+
+    void save(SysUser sysUser);
 }

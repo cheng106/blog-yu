@@ -1,5 +1,7 @@
 package idv.cheng.dao.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -8,6 +10,9 @@ import lombok.Data;
  **/
 @Data
 public class SysUser {
+
+    // 未來帳號變多後，要進行分表操作，ID就需要用分散式ID
+    @TableId(type = IdType.ASSIGN_ID) // 預設的ID
     private Long id;
     private String account;
     private String password;
