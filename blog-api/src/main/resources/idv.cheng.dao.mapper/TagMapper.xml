@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- MyBatis 設定文件 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//OTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="idv.cheng.dao.mapper.TagMapper">
+
+    <!-- List<Tag> findTagsByArticleId(Long articleId); -->
+    <select id="findTagsByArticleId" parameterType="long" resultType="idv.cheng.dao.pojo.Tag">
+        select id, avatar, tag_name as tagName
+        from yu_tag
+        where id in (select tag_id from yu_article_tag where article_id = #{articleId})
+    </select>
+</mapper>

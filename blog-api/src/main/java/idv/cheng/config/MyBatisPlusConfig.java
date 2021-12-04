@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 2021/12/3 23:06
  **/
 @Configuration
-@MapperScan("idv.com.blog.mapper")
+@MapperScan("idv.com.blog.dao.mapper")
 public class MyBatisPlusConfig {
 
     // 分頁
