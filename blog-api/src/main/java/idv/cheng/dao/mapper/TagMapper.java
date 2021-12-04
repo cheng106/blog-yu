@@ -18,4 +18,14 @@ public interface TagMapper extends BaseMapper<Tag> {
      * @return java.util.List<idv.cheng.dao.pojo.Tag>
      **/
     List<Tag> findTagsByArticleId(Long articleId);
+
+    /**
+     * 查詢最熱門的標籤，前N條
+     *
+     * @param limit N
+     * @return java.util.List<java.lang.Long>
+     **/
+    List<Long> findHotsTagIds(int limit);
+
+    List<Tag> findTagsByTagIds(List<Long> tagIds);
 }

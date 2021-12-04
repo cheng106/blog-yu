@@ -23,7 +23,7 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService {
     @Resource
-    private ArticleMapper articleService;
+    private ArticleMapper articleMapper;
     @Autowired
     private TagService tagService;
     @Autowired
@@ -37,7 +37,7 @@ public class ArticleServiceImpl implements ArticleService {
         wrapper.orderByDesc(Article::getWeight);
         // order by create_date desc;
         wrapper.orderByDesc(Article::getCreateDate);
-        Page<Article> articlePage = articleService.selectPage(page, wrapper);
+        Page<Article> articlePage = articleMapper.selectPage(page, wrapper);
         List<Article> records = articlePage.getRecords();
         List<ArticleVo> articleVos = copyList(records, true, true);
         return Result.success(articleVos);

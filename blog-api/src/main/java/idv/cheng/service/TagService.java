@@ -1,5 +1,6 @@
 package idv.cheng.service;
 
+import idv.cheng.vo.Result;
 import idv.cheng.vo.TagVo;
 
 import java.util.List;
@@ -11,4 +12,6 @@ import java.util.List;
 public interface TagService {
 
     List<TagVo> findTagsByArticleId(Long articleId);
+
+    Result hots(int limit);
 }
