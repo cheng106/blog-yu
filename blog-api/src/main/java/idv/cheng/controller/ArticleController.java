@@ -4,10 +4,7 @@ import idv.cheng.service.ArticleService;
 import idv.cheng.vo.Result;
 import idv.cheng.vo.params.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author cheng
@@ -32,13 +29,14 @@ public class ArticleController {
     }
 
     /**
-     * 首頁熱門文章
+     * 首頁熱門文章(hot) or 最新文章(new)
      *
      * @return idv.cheng.vo.Result
      **/
-    @PostMapping("/hot")
-    public Result hotArticle() {
+    @PostMapping("/{type}")
+    public Result hotArticle(@PathVariable String type) {
         int limit = 5;
-        return articleService.hotArticle(limit);
+        return articleService.getHotOrNewArticle(type, limit);
     }
+
 }

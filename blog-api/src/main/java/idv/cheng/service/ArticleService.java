@@ -18,10 +18,11 @@ public interface ArticleService {
     Result listArticle(PageParams page);
 
     /**
-     * 首頁熱門文章
+     * 首頁熱門文章 or 最新文章
      *
      * @param limit 前N條
      * @return idv.cheng.vo.Result
      **/
-    Result hotArticle(int limit);
+    Result getHotOrNewArticle(String type, int limit);
+
 }

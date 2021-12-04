@@ -44,9 +44,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Result hotArticle(int limit) {
+    public Result getHotOrNewArticle(String type, int limit) {
         LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
-        wrapper.orderByDesc(Article::getViewCounts);
+        switch (type) {
+            case "hot":
+                wrapper.orderByDesc(Article::getViewCounts);
+                break;
+            case "new":
+                wrapper.orderByDesc(Article::getCreateDate);
+            default:
+                return Result.fail(-1, "type not found");
+        }
         wrapper.select(Article::getId, Article::getTitle);
         wrapper.last("limit " + limit);
         List<Article> articles = articleMapper.selectList(wrapper);
