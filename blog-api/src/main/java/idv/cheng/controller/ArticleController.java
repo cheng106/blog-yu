@@ -39,4 +39,9 @@ public class ArticleController {
         return articleService.getHotOrNewArticle(type, limit);
     }
 
+    @PostMapping("/listArchives")
+    public Result listArchives() {
+        return articleService.listArticles();
+    }
+
 }

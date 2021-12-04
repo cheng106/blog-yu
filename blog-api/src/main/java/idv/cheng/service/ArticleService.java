@@ -25,4 +25,10 @@ public interface ArticleService {
      **/
     Result getHotOrNewArticle(String type, int limit);
 
+    /**
+     * 文章歸檔
+     *
+     * @return idv.cheng.vo.Result
+     **/
+    Result listArticles();
 }

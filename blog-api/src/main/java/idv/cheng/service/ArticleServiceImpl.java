@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import idv.cheng.dao.mapper.ArticleMapper;
 import idv.cheng.dao.pojo.Article;
+import idv.cheng.dao.vo.Archives;
 import idv.cheng.vo.ArticleVo;
 import idv.cheng.vo.Result;
 import idv.cheng.vo.params.PageParams;
@@ -59,6 +60,12 @@ public class ArticleServiceImpl implements ArticleService {
         wrapper.last("limit " + limit);
         List<Article> articles = articleMapper.selectList(wrapper);
         return Result.success(copyList(articles, false, false));
+    }
+
+    @Override
+    public Result listArticles() {
+        List<Archives> archivesList = articleMapper.listArticles();
+        return Result.success(archivesList);
     }
 
     private List<ArticleVo> copyList(List<Article> records, boolean isTag, boolean isAuthor) {
