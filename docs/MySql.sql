@@ -73,7 +73,7 @@ CREATE TABLE yu_comment
     content     VARCHAR(255) DEFAULT NULL,
     article_id  INT(0) NOT NULL,
     author_id   BIGINT(0) NOT NULL,
-    parent_id   INT(0) NOT NULL,
+    parent_id   BIGINT(0) NOT NULL,
     to_uid      VARCHAR(1) NOT NULL,
     level       VARCHAR(1) NOT NULL,
     create_date BIGINT(0) NOT NULL,
