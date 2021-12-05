@@ -16,8 +16,8 @@ public class Article {
     private Long authorId;
     private Long bodyId;
     private Long categoryId;
-    private int commentCounts;
-    private int viewCounts;
-    private int weight = ARTICLE_COMMON;
+    private Integer commentCounts;
+    private Integer viewCounts;
+    private Integer weight;
     private Long createDate;
 }
