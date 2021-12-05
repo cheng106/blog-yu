@@ -31,4 +31,12 @@ public interface ArticleService {
      * @return idv.cheng.vo.Result
      **/
     Result listArticles();
+
+    /**
+     * 查看詳細文章
+     *
+     * @param articleId 文章ID
+     * @return idv.cheng.vo.Result
+     **/
+    Result findArticleById(Long articleId);
 }

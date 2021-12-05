@@ -48,3 +48,21 @@ CREATE TABLE yu_sys_user
     status              VARCHAR(255) DEFAULT NULL COMMENT '狀態',
     PRIMARY KEY (id) USING BTREE
 );
+
+CREATE TABLE yu_article_body
+(
+    id           BIGINT(0) NOT NULL AUTO_INCREMENT,
+    content      LONGTEXT NULL,
+    content_html LONGTEXT NULL,
+    article_id   BIGINT(0) NOT NULL,
+    PRIMARY KEY (id) USING BTREE
+);
+
+CREATE TABLE yu_category
+(
+    id            BIGINT(0) NOT NULL AUTO_INCREMENT,
+    avatar        VARCHAR(255) DEFAULT NULL,
+    category_name VARCHAR(255) DEFAULT NULL,
+    description   VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (id) USING BTREE
+);

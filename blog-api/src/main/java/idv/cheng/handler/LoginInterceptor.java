@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import idv.cheng.dao.pojo.SysUser;
 import idv.cheng.enums.ErrorCode;
 import idv.cheng.service.LoginService;
+import idv.cheng.utils.UserThreadLocal;
 import idv.cheng.vo.Result;
 import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +61,14 @@ public class LoginInterceptor implements HandlerInterceptor {
             return noLoginStatus(response);
         }
 
+        UserThreadLocal.put(sysUser);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        // 如果不刪除 ThreadLocal 中的資料，可能會有記憶體溢位的風險
+        UserThreadLocal.remove();
     }
 
     private boolean noLoginStatus(HttpServletResponse response) throws IOException {
