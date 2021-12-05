@@ -4,12 +4,18 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import idv.cheng.dao.mapper.ArticleBodyMapper;
 import idv.cheng.dao.mapper.ArticleMapper;
+import idv.cheng.dao.mapper.ArticleTagMapper;
 import idv.cheng.dao.pojo.Article;
 import idv.cheng.dao.pojo.ArticleBody;
+import idv.cheng.dao.pojo.ArticleTag;
+import idv.cheng.dao.pojo.SysUser;
 import idv.cheng.dao.vo.Archives;
+import idv.cheng.utils.UserThreadLocal;
 import idv.cheng.vo.ArticleBodyVo;
 import idv.cheng.vo.ArticleVo;
 import idv.cheng.vo.Result;
+import idv.cheng.vo.TagVo;
+import idv.cheng.vo.params.ArticleParam;
 import idv.cheng.vo.params.PageParams;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
@@ -18,7 +24,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author cheng
@@ -30,6 +38,8 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
     @Resource
     private ArticleBodyMapper articleBodyMapper;
+    @Resource
+    private ArticleTagMapper articleTagMapper;
     @Autowired
     private TagService tagService;
     @Autowired
@@ -91,6 +101,53 @@ public class ArticleServiceImpl implements ArticleService {
         // 把更新操作丟到池執行，就和主執行緒無關
         threadService.updateArticleViewCount(articleMapper, article);
         return Result.success(articleVo);
+    }
+
+    @Override
+    public Result publish(ArticleParam param) {
+        // 此API要加入登入攔截當中，否則會取不到User訊息
+        SysUser sysUser = UserThreadLocal.get();
+        // 發佈文章，目的建立Article
+        // 作者ID，既當前的登入使用者
+        // 要將標籤加入到關連列表當中
+        // body內容儲存article bodyId
+
+        Article article = new Article();
+        article.setAuthorId(sysUser.getId());
+        article.setWeight(Article.ARTICLE_COMMON);
+        article.setViewCounts(0);
+        article.setTitle(param.getTitle());
+        article.setSummary(param.getSummary());
+        article.setCommentCounts(0);
+        article.setCreateDate(System.currentTimeMillis());
+        article.setCategoryId(param.getCategoryVo().getId());
+        // insert後，會產生一個文章ID
+        articleMapper.insert(article);
+        // tag
+        List<TagVo> tags = param.getTags();
+        if (tags != null) {
+            tags.forEach(t -> {
+                Long articleId = article.getId();
+                ArticleTag articleTag = new ArticleTag();
+                articleTag.setTagId(t.getId());
+                articleTag.setArticleId(articleId);
+                articleTagMapper.insert(articleTag);
+            });
+        }
+
+        // body
+        ArticleBody articleBody = new ArticleBody();
+        articleBody.setArticleId(article.getId());
+        articleBody.setContent(param.getBody().getContent());
+        articleBody.setContentHtml(param.getBody().getContentHtml());
+        articleBodyMapper.insert(articleBody);
+
+        article.setBodyId(articleBody.getId());
+        articleMapper.updateById(article);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("id", article.getId().toString());
+        return Result.success(map);
     }
 
     private List<ArticleVo> copyList(List<Article> records, boolean isTag, boolean isAuthor) {

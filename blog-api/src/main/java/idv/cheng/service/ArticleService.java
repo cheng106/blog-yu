@@ -1,6 +1,7 @@
 package idv.cheng.service;
 
 import idv.cheng.vo.Result;
+import idv.cheng.vo.params.ArticleParam;
 import idv.cheng.vo.params.PageParams;
 
 /**
@@ -39,4 +40,12 @@ public interface ArticleService {
      * @return idv.cheng.vo.Result
      **/
     Result findArticleById(Long articleId);
+
+    /**
+     * 文章發佈
+     *
+     * @param param 前端參數
+     * @return idv.cheng.vo.Result
+     **/
+    Result publish(ArticleParam param);
 }

@@ -2,6 +2,7 @@ package idv.cheng.controller;
 
 import idv.cheng.service.ArticleService;
 import idv.cheng.vo.Result;
+import idv.cheng.vo.params.ArticleParam;
 import idv.cheng.vo.params.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,11 @@ public class ArticleController {
     @PostMapping("/article/view/{articleId}")
     public Result findArticleById(@PathVariable Long articleId) {
         return articleService.findArticleById(articleId);
+    }
+
+    @PostMapping("/article/publish")
+    public Result publish(@RequestBody ArticleParam param) {
+        return articleService.publish(param);
     }
 
 }

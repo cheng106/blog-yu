@@ -30,7 +30,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 攔截test，後續實際遇到需要攔截的API再另外設定
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/test")
-                .addPathPatterns("/comments/create/change");
+                .addPathPatterns("/comments/create/change")
+                .addPathPatterns("/articles/publish");
 //        registry.addInterceptor(loginInterceptor)
 //                .addPathPatterns("/**")
 //                .excludePathPatterns("/login")
