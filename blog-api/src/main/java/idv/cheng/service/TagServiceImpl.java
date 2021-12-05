@@ -1,5 +1,6 @@
 package idv.cheng.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import idv.cheng.dao.mapper.TagMapper;
 import idv.cheng.dao.pojo.Tag;
 import idv.cheng.vo.Result;
@@ -42,6 +43,12 @@ public class TagServiceImpl implements TagService {
         // select * from tag where id in (1,2,3,4)
         List<Tag> tagList = tagMapper.findTagsByTagIds(tagIds);
         return Result.success(tagList);
+    }
+
+    @Override
+    public Result findAll() {
+        List<Tag> tags = tagMapper.selectList(new LambdaQueryWrapper<>());
+        return Result.success(copyList(tags));
     }
 
     public TagVo copy(Tag tag) {
