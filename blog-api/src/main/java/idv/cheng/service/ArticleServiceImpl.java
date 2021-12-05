@@ -36,6 +36,8 @@ public class ArticleServiceImpl implements ArticleService {
     private SysUserService sysUserService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ThreadService threadService;
 
     @Override
     public Result listArticle(PageParams params) {
@@ -81,6 +83,13 @@ public class ArticleServiceImpl implements ArticleService {
         // 根據bodyId & categoryId 做關連查詢
         Article article = articleMapper.selectById(articleId);
         ArticleVo articleVo = copy(article, true, true, true, true);
+        // 查看文章後，新增閱讀數量
+        // 查看文章後，應該直接返回資料，這時候做了一個更新，更新時加寫鎖就會阻塞其他的讀操作，性能就會低
+        // 更新 增加了此次API的耗時，如果更新出問題，不能影響查看文章的操作
+
+        // 使用執行緒池，解決上述問題
+        // 把更新操作丟到池執行，就和主執行緒無關
+        threadService.updateArticleViewCount(articleMapper, article);
         return Result.success(articleVo);
     }
 
