@@ -6,6 +6,7 @@ import idv.cheng.dao.mapper.SysUserMapper;
 import idv.cheng.dao.pojo.SysUser;
 import idv.cheng.vo.LoginUserVo;
 import idv.cheng.vo.Result;
+import idv.cheng.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,14 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserMapper sysUserMapper;
     @Autowired
     private LoginService loginService;
+
+    @Override
+    public UserVo findUserVoById(Long id) {
+        SysUser sysUser = Optional.ofNullable(sysUserMapper.selectById(id)).orElse(new SysUser());
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(sysUser, userVo);
+        return userVo;
+    }
 
     @Override
     public SysUser findUserById(Long id) {
