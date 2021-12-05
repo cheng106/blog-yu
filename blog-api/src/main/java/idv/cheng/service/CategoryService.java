@@ -1,6 +1,7 @@
 package idv.cheng.service;
 
 import idv.cheng.vo.CategoryVo;
+import idv.cheng.vo.Result;
 
 /**
  * @author cheng
@@ -9,4 +10,6 @@ import idv.cheng.vo.CategoryVo;
 public interface CategoryService {
 
     CategoryVo findCategoryById(Long categoryId);
+
+    Result findAll();
 }
