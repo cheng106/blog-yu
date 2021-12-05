@@ -2,6 +2,7 @@ package idv.cheng.controller;
 
 import idv.cheng.service.CommentService;
 import idv.cheng.vo.Result;
+import idv.cheng.vo.params.CommentParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,5 +20,10 @@ public class CommentController {
     @GetMapping("/article/{id}")
     public Result comments(@PathVariable Long id) {
         return commentService.commentsByArticleId(id);
+    }
+
+    @PostMapping
+    public Result comment(@RequestBody CommentParam param) {
+        return commentService.comment(param);
     }
 }

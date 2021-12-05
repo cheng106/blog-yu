@@ -29,7 +29,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 攔截test，後續實際遇到需要攔截的API再另外設定
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/test");
+                .addPathPatterns("/test")
+                .addPathPatterns("/comments/create/change");
 //        registry.addInterceptor(loginInterceptor)
 //                .addPathPatterns("/**")
 //                .excludePathPatterns("/login")

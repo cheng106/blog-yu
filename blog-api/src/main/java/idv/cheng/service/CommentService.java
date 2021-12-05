@@ -1,6 +1,7 @@
 package idv.cheng.service;
 
 import idv.cheng.vo.Result;
+import idv.cheng.vo.params.CommentParam;
 
 /**
  * @author cheng
@@ -15,4 +16,6 @@ public interface CommentService {
      * @return Result
      **/
     Result commentsByArticleId(Long id);
+
+    Result comment(CommentParam param);
 }

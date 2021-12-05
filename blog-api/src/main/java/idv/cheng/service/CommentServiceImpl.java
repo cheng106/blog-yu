@@ -3,9 +3,12 @@ package idv.cheng.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import idv.cheng.dao.mapper.CommentMapper;
 import idv.cheng.dao.pojo.Comment;
+import idv.cheng.dao.pojo.SysUser;
+import idv.cheng.utils.UserThreadLocal;
 import idv.cheng.vo.CommentVo;
 import idv.cheng.vo.Result;
 import idv.cheng.vo.UserVo;
+import idv.cheng.vo.params.CommentParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,27 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> comments = commentMapper.selectList(wrapper);
         List<CommentVo> commentVoList = copyList(comments);
         return Result.success(commentVoList);
+    }
+
+    @Override
+    public Result comment(CommentParam param) {
+        SysUser sysUser = UserThreadLocal.get();
+
+        Comment comment = new Comment();
+        comment.setArticleId(param.getArticleId());
+        comment.setAuthorId(sysUser.getId());
+        comment.setContent(param.getContent());
+        comment.setCreateDate(System.currentTimeMillis());
+
+        Long parent = param.getParent();
+        comment.setLevel((parent == null || parent == 0) ? 1 : 2);
+        comment.setParentId(parent == null ? 0 : parent);
+
+        Long toUserId = param.getToUserId();
+        comment.setToUid(toUserId == null ? 0 : toUserId);
+        commentMapper.insert(comment);
+
+        return Result.success(null);
     }
 
     private List<CommentVo> copyList(List<Comment> comments) {
