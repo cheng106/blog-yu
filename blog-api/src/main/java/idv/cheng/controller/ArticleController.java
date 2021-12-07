@@ -1,5 +1,6 @@
 package idv.cheng.controller;
 
+import idv.cheng.aop.LogApi;
 import idv.cheng.service.ArticleService;
 import idv.cheng.vo.Result;
 import idv.cheng.vo.params.ArticleParam;
@@ -25,6 +26,7 @@ public class ArticleController {
      * @return idv.cheng.vo.Result
      **/
     @PostMapping
+    @LogApi(module = "文章", operator = "取得文章列表")
     public Result listArticle(@RequestBody PageParams page) {
         return articleService.listArticle(page);
     }
