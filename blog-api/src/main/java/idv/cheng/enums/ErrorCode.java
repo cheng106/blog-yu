@@ -16,6 +16,7 @@ public enum ErrorCode {
     PartnerAPIResolveFailed(10004, "API解析失敗", HttpStatus.INTERNAL_SERVER_ERROR),
     ACCOUNT_EXIST(10005, "帳號已存在"),
     NO_PERMISSION(70001, "無訪問權限", HttpStatus.UNAUTHORIZED),
+    UPLOAD_ERROR(70001, "檔案上傳失敗", HttpStatus.INTERNAL_SERVER_ERROR),
     SESSION_TIMEOUT(90001, "已逾時"),
     NO_LOGIN(90002, "尚未登入"),
     TOKEN_ERROR(10003, "TOKEN 驗證失敗", HttpStatus.UNAUTHORIZED),

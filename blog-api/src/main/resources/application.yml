@@ -12,6 +12,12 @@ spring:
     port: 6379
   main:
     allow-circular-references: true
+  servlet:
+    multipart:
+      # 單個檔案的最大值
+      max-file-size: 2MB
+      # 上傳檔案總共的最大值
+      max-request-size: 20MB
 
 mybatis-plus:
   configuration:
@@ -19,5 +25,8 @@ mybatis-plus:
   global-config:
     db-config:
       table-prefix: yu_
+
+file:
+  path: /Users/cheng/IdeaProjects/blog-yu/blog-api/src/main/resources/file/
 
 
