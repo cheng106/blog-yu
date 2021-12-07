@@ -5,7 +5,9 @@
 <mapper namespace="idv.cheng.dao.mapper.ArticleMapper">
 
     <select id="listArticles" resultType="idv.cheng.dao.vo.Archives">
-        select year(create_date) as year, month(create_date) as month, count(*) as count
+        select from_unixtime(create_date / 1000, '%Y') as year,
+               from_unixtime(create_date / 1000, '%m') as month,
+               count(*)                                as count
         from yu_article
         group by year, month
     </select>
